@@ -3,8 +3,25 @@
 organdiaRUm is beginning its life as a Ruby port/reimagination of [Organdiae][organdiae] by [Mike Solomon][apollinemike].
 We'll see where it goes from there.
 
+## Basic Usage
+
+    ~$ irb
+    irb> require "organdiarum"
+    irb> include Organdiarum
+    irb> g = Digraph.new
+    irb> g.add_vertices("a", "b", "c", "d", "e")
+    irb> g.add_edge("a", "b")
+    irb> g.add_edge("a", "c")
+    irb> g.add_edge("a", "d")
+    irb> g.add_edges(["b", "e"], ["d", "e"])
+    irb> gv(g)
+
+should return a file that looks like
+
+![test.svg](http://github.com/mikowitz/organdiarum/test.svg "test.svg")
+
 ## Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a

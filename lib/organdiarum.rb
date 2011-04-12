@@ -1,6 +1,6 @@
 module Organdiarum
   def gv(digraph)
-    File.open("#{digraph}.dot", "w") {|f| f << digraph.to_dot }
+    File.open("#{digraph.name}.dot", "w") {|f| f << digraph.to_dot }
   end
 
   class Base
