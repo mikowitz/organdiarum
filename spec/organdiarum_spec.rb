@@ -56,5 +56,24 @@ describe "Organdiarum" do
       @d.edges.map(&:to_s).should ==
         ["a --> b", "b --> c", "d --> a"]
     end
+
+    it "should output to .dot format correctly" do
+      @d.add_vertices(*%w{a b c d e})
+      @d.add_edges(%w{a b}, %w{b c}, %w{d e})
+
+      dot_file = <<-EOF
+digraph #{@d.name} {
+  a [label="a"]
+  b [label="b"]
+  c [label="c"]
+  d [label="d"]
+  e [label="e"]
+  a -> b [dir=forward,label=""]
+  b -> c [dir=forward,label=""]
+  d -> e [dir=forward,label=""]
+}
+EOF
+      @d.to_dot.should == dot_file.strip
+    end
   end
 end

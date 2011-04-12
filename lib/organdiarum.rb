@@ -1,4 +1,8 @@
 module Organdiarum
+  def gv(digraph)
+    File.open("#{digraph}.dot", "w") {|f| f << digraph.to_dot }
+  end
+
   class Base
     include Comparable
 
@@ -55,6 +59,15 @@ module Organdiarum
     end
     alias :aes :add_edges
 
+    def to_dot
+      [
+        "digraph #{@name} {",
+        @vertices.map{|vertex| vertex.to_dot},
+        @edges.map{|edge| edge.to_dot},
+        "}"
+      ].flatten.join("\n")
+    end
+
     def to_s
       ["VERTICES",
        @vertices.map{|vertex| "  #{vertex.to_s}"},
@@ -72,6 +85,10 @@ module Organdiarum
     def to_s
       @name
     end
+
+    def to_dot
+      %|  #{name} [label="#{name}"]|
+    end
   end
 
   class Edge < Base
@@ -81,6 +98,10 @@ module Organdiarum
 
     def to_s
       "#{@from} --> #{@to}"
+    end
+
+    def to_dot
+      %|  #{@from} -> #{@to} [dir=forward,label=""]|
     end
   end
 end
