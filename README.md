@@ -1,6 +1,7 @@
-= organdiarum
+# organdiaRUm
 
-Description goes here.
+organdiaRUm is beginning its life as a Ruby port/reimagination, see [Organdiae][organdiae] by [Mike Solomon][apollinemike].
+We'll see where it goes from there.
 
 == Note on Patches/Pull Requests
  
@@ -15,3 +16,6 @@ Description goes here.
 == Copyright
 
 Copyright (c) 2011 Michael Berkowitz. See LICENSE for details.
+
+[organdiae]: http://www.organdiae.com "Organdiae"
+[apollinemike]: http://www.apollinemike.com "Mike Solomon"
