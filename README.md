@@ -18,7 +18,7 @@ We'll see where it goes from there.
 
 should return a file that looks like
 
-![test.svg](http://github.com/mikowitz/organdiarum/test.svg "test.svg")
+![organdiarum](http://www.songsaboutsnow.com/organdiarum.png "organdiarum.png")
 
 ## Note on Patches/Pull Requests
 
