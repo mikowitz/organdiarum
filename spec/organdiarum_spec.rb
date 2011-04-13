@@ -11,6 +11,20 @@ describe "Organdiarum" do
     end
   end
 
+  describe "Edge" do
+    it "should be able to take additional parameters" do
+      e = Organdiarum::Edge.new("a", "b", :label => "x")
+      e.to_dot.should == %|  a -> b [dir="forward",label="x"]|
+    end
+  end
+
+  describe "Vertex" do
+    it "should be able to take additional parameters" do
+      v = Organdiarum::Vertex.new("a", :color => "blue", :fillcolor => "green")
+      v.to_dot.should == %|  a [label="a",color="blue",style="filled",fillcolor="green"]|
+    end
+  end
+
   describe "Digraph" do
     before { @d = Organdiarum::Digraph.new }
 
@@ -68,9 +82,9 @@ digraph #{@d.name} {
   c [label="c"]
   d [label="d"]
   e [label="e"]
-  a -> b [dir=forward,label=""]
-  b -> c [dir=forward,label=""]
-  d -> e [dir=forward,label=""]
+  a -> b [dir="forward",label=""]
+  b -> c [dir="forward",label=""]
+  d -> e [dir="forward",label=""]
 }
 EOF
       @d.to_dot.should == dot_file.strip

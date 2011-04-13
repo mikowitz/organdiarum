@@ -6,6 +6,8 @@ module Organdiarum
   class Base
     include Comparable
 
+    OPT_ORDER = [:dir, :label, :color, :style, :fillcolor]
+
     attr_reader :name
     def initialize(name=nil)
       @name = name || generate_uuid
@@ -19,6 +21,10 @@ module Organdiarum
 
     def generate_uuid
       `uuidgen`.strip.gsub(/-/, "").gsub(/\w/) {|m| rand(10) < 5 ? m : m.downcase}
+    end
+
+    def opts_for_dot
+      @opts.sort_by{|k, v| OPT_ORDER.index(k)}.map{|key, value| %|#{key}="#{value}"|}.join(",")
     end
   end
 
@@ -78,8 +84,10 @@ module Organdiarum
   end
 
   class Vertex < Base
-    def initialize(name=nil)
+    def initialize(name=nil, opts={})
       super(name)
+      @opts = {:label => name}.merge(opts)
+      @opts.merge!(:style => "filled") if @opts[:fillcolor]
     end
 
     def to_s
@@ -87,13 +95,14 @@ module Organdiarum
     end
 
     def to_dot
-      %|  #{name} [label="#{name}"]|
+      %|  #{name} [#{opts_for_dot}]|
     end
   end
 
   class Edge < Base
-    def initialize(from, to)
+    def initialize(from, to, opts={})
       @from, @to = from, to
+      @opts = {:dir => "forward", :label => ""}.merge(opts)
     end
 
     def to_s
@@ -101,7 +110,7 @@ module Organdiarum
     end
 
     def to_dot
-      %|  #{@from} -> #{@to} [dir=forward,label=""]|
+      %|  #{@from} -> #{@to} [#{opts_for_dot}]|
     end
   end
 end
