@@ -12,14 +12,14 @@ describe "Organdiarum" do
   end
 
   describe "Edge" do
-    it "should be able to take additional parameters" do
+    it "should take additional parameters" do
       e = Organdiarum::Edge.new("a", "b", :label => "x")
       e.to_dot.should == %|  a -> b [dir="forward",label="x"]|
     end
   end
 
   describe "Vertex" do
-    it "should be able to take additional parameters" do
+    it "should take additional parameters" do
       v = Organdiarum::Vertex.new("a", :color => "blue", :fillcolor => "green")
       v.to_dot.should == %|  a [label="a",color="blue",style="filled",fillcolor="green"]|
     end
@@ -28,15 +28,20 @@ describe "Organdiarum" do
   describe "Digraph" do
     before { @d = Organdiarum::Digraph.new }
 
-    it "should be able to add a vertex object" do
+    it "should add a vertex object" do
       vertex = Organdiarum::Vertex.new("city")
       @d.add_vertex(vertex)
       @d.vertices.should == [vertex]
     end
 
-    it "should be able to add a vertex from a string" do
+    it "should add a vertex from a string" do
       @d.add_vertex("set")
       @d.vertices.should == [Organdiarum::Vertex.new("set")]
+    end
+
+    it "should add a vertex with additional arguments" do
+      @d.add_vertex("set", :color => "red")
+      @d.vertices.map(&:to_dot).should == [%|  set [label="set",color="red"]|]
     end
 
     it "should silently not add duplicate vertices" do
@@ -59,6 +64,13 @@ describe "Organdiarum" do
       @d.add_edge(edge)
 
       @d.edges.map(&:to_s).should == ["a --> b"]
+    end
+
+    it "should add an edge with additional arguments" do
+      @d.add_vertices("a", "b")
+      @d.add_edge("a", "b", :label => "a_to_b")
+
+      @d.edges.map(&:to_dot).should == [%|  a -> b [dir="forward",label="a_to_b"]|]
     end
 
     it "should add multiple edges" do

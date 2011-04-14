@@ -36,6 +36,15 @@ module Organdiarum
       @edges = []
     end
 
+    def add_vertex(vertex_or_name, opts={})
+      if vertex_or_name.instance_of?(Vertex)
+        @vertices << vertex_or_name
+      else
+        @vertices << Vertex.new(vertex_or_name, opts)
+      end
+    end
+    alias :av :add_vertex
+
     def add_vertices(*vertices)
       vertices.each do |vertex|
         vertex = Vertex.new(vertex) unless vertex.instance_of?(Vertex)
@@ -43,15 +52,13 @@ module Organdiarum
       end
       self
     end
-    alias :add_vertex :add_vertices
-    alias :av :add_vertices
     alias :avs :add_vertices
 
-    def add_edge(edge_or_from, to=nil)
+    def add_edge(edge_or_from, to=nil, opts={})
       if edge_or_from.instance_of?(Edge)
         @edges << edge_or_from
       else
-        @edges << Edge.new(edge_or_from, to)
+        @edges << Edge.new(edge_or_from, to, opts)
       end
       self
     end
